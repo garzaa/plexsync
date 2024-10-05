@@ -2,21 +2,9 @@ import dotenv
 import requests
 import os
 import glob
-from xml.etree import ElementTree
 
 dotenv.load_dotenv()
 base_url = os.environ["BASE_URL"]
-
-def etree_to_dict(t):
-    if type(t) is ElementTree: return etree_to_dict(t.getroot())
-    return {
-        **t.attrib,
-        'text': t.text,
-        **{e.tag: etree_to_dict(e) for e in t}
-    }
-
-def to_dict(r):
-    return etree_to_dict(ElementTree.fromstring(r.content))
 
 # get this from the plex_tv_auth cookie under authentication_token
 # is this ok to use? i mean it works but still...not documented anywhere lol
